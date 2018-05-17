@@ -80,8 +80,7 @@ public class MainServeur {
             for(int i=0;i<3;i++)
                 vaisseaux[i] = data.item(3).getChildNodes().item(i).getTextContent();
         } catch(Exception e) {
-            System.out.println(e);
-            System.out.println("ERREUR: Lecture du fichier Data.xml impossible");
+            System.out.println("En attente d'une requete");
         }
     }
     public static void clean(Node node) {
