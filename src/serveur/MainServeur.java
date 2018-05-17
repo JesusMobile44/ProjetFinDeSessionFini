@@ -61,6 +61,18 @@ public class MainServeur {
             }
         }
     }
+    static void save(String[] parts){
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date=new Date();
+        try {
+            ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("Simulation_"+df.format(date)+".dat")));
+            for(int i=0;i<parts.length;i++)
+                sortie.writeObject(parts[i]);
+            sortie.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void readData(){
         try {
             File file = new File("Data.xml");
@@ -104,16 +116,5 @@ public class MainServeur {
                 node.removeChild(child);
         }
     }
-    static void save(String[] parts){
-        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        Date date=new Date();
-        try {
-            ObjectOutputStream sortie = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("Simulation_"+df.format(date)+".dat")));
-            for(int i=0;i<parts.length;i++)
-                sortie.writeObject(parts[i]);
-            sortie.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

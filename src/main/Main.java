@@ -57,7 +57,7 @@ public class Main {
         for(int i=0;i<nbVaisseau;i++){
             envoieVaisseau(listeVaisseau.get(i));
         }
-        System.out.println("Simulation terminé: Tous les vaisseaux on été envoyés");
+        System.out.println("Tous les vaisseaux ont été envoyés");
         sendData();
         affichageFin();
     }
@@ -68,7 +68,7 @@ public class Main {
         try {
             listeCentre.get(vaisseau.getCentreActuel()).decharger(vaisseau);
         } catch (Exception e){
-            System.out.println("Simulation terminé: Toutes les files d'attentes sont pleines");
+            System.out.println("Toutes les files d'attentes sont pleines");
             affichageFin();
         }
     }
@@ -84,71 +84,6 @@ public class Main {
         }
         System.exit(0);
     }
-    public static void getData(){
-            try {
-                File fXmlFile = new File("Data.xml");
-                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                Document doc = dBuilder.parse(fXmlFile);
-                doc.getDocumentElement().normalize();
-                System.out.println("" + doc.getDocumentElement().getNodeName());
-
-                NodeList nList = doc.getElementsByTagName("Centre");
-                Node entree = nList.item(0);
-                Element premier = (Element) entree;
-
-                nbCentre = Integer.parseInt(premier.getElementsByTagName("nbCentre").item(0).getTextContent());
-
-                nList = doc.getElementsByTagName("Dechet");
-                System.out.println("----------------------------");
-                for (int temp = 0; temp < nList.getLength(); temp++) {
-                    Node nNode = nList.item(temp);
-                    System.out.println(brillant+"\nElement actuel :" + nNode.getNodeName()+noir);
-                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElement = (Element) nNode;
-                        System.out.println(bleu+"First Name : " + eElement.getElementsByTagName("type").item(0).getTextContent());
-                        System.out.println("Masse volumique : " + eElement.getElementsByTagName("masseVolumique").item(0).getTextContent());
-                        System.out.println("Pourcentage : " + eElement.getElementsByTagName("pourcentage").item(0).getTextContent()+noir);
-                        System.out.println();
-                    }
-                }
-                nList = doc.getElementsByTagName("Planete");
-                for (int temp = 0; temp < nList.getLength(); temp++) {
-                    Node nNode = nList.item(temp);
-                    System.out.println(brillant+"\nElement actuel : " + nNode.getNodeName());
-                    System.out.println();
-                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElement = (Element) nNode;
-                        System.out.println(vert+"Planete: " + eElement.getElementsByTagName("Nom").item(0).getTextContent());
-                        System.out.println("Gadolinium en %: " + eElement.getElementsByTagName("nbGadolinium").item(0).getTextContent());
-                        System.out.println("Neptunium en %: " + eElement.getElementsByTagName("nbNeptunium").item(0).getTextContent());
-                        System.out.println("Plutonium en %: " + eElement.getElementsByTagName("nbPlutonium").item(0).getTextContent());
-                        System.out.println("Terbium en %: " + eElement.getElementsByTagName("nbTerbium").item(0).getTextContent());
-                        System.out.println("Thulium en %: " + eElement.getElementsByTagName("nbThulium").item(0).getTextContent()+noir);
-                        System.out.println();
-                    }
-                }
-                nList = doc.getElementsByTagName("Vaisseaux");
-                for (int temp = 0; temp < nList.getLength(); temp++) {
-                    Node nNode = nList.item(temp);
-                    System.out.println(brillant+"\nElement actuel : " + nNode.getNodeName());
-                    System.out.println();
-                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElement = (Element) nNode;
-                        nbLeger=Integer.parseInt(eElement.getElementsByTagName("nbLeger").item(0).getTextContent());
-                        System.out.println(teal+"Vaisseau léger: " + nbLeger);
-                        nbNormal=Integer.parseInt(eElement.getElementsByTagName("nbNormal").item(0).getTextContent());
-                        System.out.println("Vaisseau normal: " +nbNormal);
-                        nbLourd=Integer.parseInt(eElement.getElementsByTagName("nbLourd").item(0).getTextContent());
-                        System.out.println("Vaisseau lourd: " +nbLourd +noir);
-                        System.out.println();
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     public static void sendData(){
         try {
             Socket socket = new Socket("127.0.0.1", 8080);
@@ -167,6 +102,71 @@ public class Main {
             }
             sortie.close();
         } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void getData(){
+        try {
+            File fXmlFile = new File("Data.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+            doc.getDocumentElement().normalize();
+            System.out.println("" + doc.getDocumentElement().getNodeName());
+
+            NodeList nList = doc.getElementsByTagName("Centre");
+            Node entree = nList.item(0);
+            Element premier = (Element) entree;
+
+            nbCentre = Integer.parseInt(premier.getElementsByTagName("nbCentre").item(0).getTextContent());
+
+            nList = doc.getElementsByTagName("Dechet");
+            System.out.println("----------------------------");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                System.out.println(brillant+"\nElement actuel :" + nNode.getNodeName()+noir);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    System.out.println(bleu+"First Name : " + eElement.getElementsByTagName("type").item(0).getTextContent());
+                    System.out.println("Masse volumique : " + eElement.getElementsByTagName("masseVolumique").item(0).getTextContent());
+                    System.out.println("Pourcentage : " + eElement.getElementsByTagName("pourcentage").item(0).getTextContent()+noir);
+                    System.out.println();
+                }
+            }
+            nList = doc.getElementsByTagName("Planete");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                System.out.println(brillant+"\nElement actuel : " + nNode.getNodeName());
+                System.out.println();
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    System.out.println(vert+"Planete: " + eElement.getElementsByTagName("Nom").item(0).getTextContent());
+                    System.out.println("Gadolinium en %: " + eElement.getElementsByTagName("nbGadolinium").item(0).getTextContent());
+                    System.out.println("Neptunium en %: " + eElement.getElementsByTagName("nbNeptunium").item(0).getTextContent());
+                    System.out.println("Plutonium en %: " + eElement.getElementsByTagName("nbPlutonium").item(0).getTextContent());
+                    System.out.println("Terbium en %: " + eElement.getElementsByTagName("nbTerbium").item(0).getTextContent());
+                    System.out.println("Thulium en %: " + eElement.getElementsByTagName("nbThulium").item(0).getTextContent()+noir);
+                    System.out.println();
+                }
+            }
+            nList = doc.getElementsByTagName("Vaisseaux");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                System.out.println(brillant+"\nElement actuel : " + nNode.getNodeName());
+                System.out.println();
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    nbLeger=Integer.parseInt(eElement.getElementsByTagName("nbLeger").item(0).getTextContent());
+                    System.out.println(teal+"Vaisseau léger: " + nbLeger);
+                    nbNormal=Integer.parseInt(eElement.getElementsByTagName("nbNormal").item(0).getTextContent());
+                    System.out.println("Vaisseau normal: " +nbNormal);
+                    nbLourd=Integer.parseInt(eElement.getElementsByTagName("nbLourd").item(0).getTextContent());
+                    System.out.println("Vaisseau lourd: " +nbLourd +noir);
+                    System.out.println();
+                }
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
